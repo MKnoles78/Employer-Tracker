@@ -29,7 +29,6 @@ function start() {
             "Update Employee Role",
             "Update Employee Manager",
             "Exit"
-
         ]
     })
     .then(function(answer){
@@ -74,7 +73,9 @@ function start() {
 function viewEmployees() {
     connection.query("SELECT * FROM employee", function(err,res){
         if (err) throw err;
-        console.log(res);
+        for (var i = 0; i < res.length; i++){
+            console.log(res[i].first_name + " " + res[i].last_name);
+        };
         connection.end();
     });
 
@@ -84,7 +85,9 @@ function viewEmployees() {
 function viewDepartment() {
     connection.query("SELECT * FROM departments", function(err,res){
         if (err) throw err;
-        console.log(res);
+        for (var i = 0; i < res.length; i++){
+            console.log(res[i].name);
+        }
         connection.end();
     });
 
@@ -103,6 +106,18 @@ function addEmployee() {
             type: "input",
             message: "Enter Last Name"
         },  
+        {
+    
+            name: "choiceRole",
+            type: "list",
+            message: "What is the employees job role?",
+            choices: [
+                "Sales",
+                "Engineering",
+                "Finace",
+                "Legal"
+            ]
+        }      
     ])
     .then(function(answer) {
         connection.query(
